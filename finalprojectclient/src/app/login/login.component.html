@@ -1,0 +1,38 @@
+<div class="row">
+
+  <div class="col d-flex flex-row">
+
+    <div class="col"></div>
+
+    <div class="col-sm-8 col-md-4 mt-5 mb-3">
+      <form [formGroup]="userLogin" (ngSubmit)="login()">
+        <div>
+          <label><b>User Name:</b></label>
+          <input type="text" class="form-control" formControlName="userName">
+        </div>
+
+        <div class="mt-5">
+          <label><b>Password:</b></label>
+          <input type="password" class="form-control" formControlName="password">
+        </div>
+
+        <div class="d-flex justify-content-center" style="color: red">
+          <i>&nbsp;{{ error }}&nbsp;</i></div>
+
+        <div class="d-flex justify-content-center mt-5">
+          <button class="btn btn-light mt-3" type="submit"><b>Login</b></button>
+        </div>
+      </form>
+
+      <div class="d-flex justify-content-center mt-2 text">
+        New to MegaRaves? Please&nbsp;<a href="">sign up</a>.
+      </div>
+
+      <button class="btn btn-light mt-3" type="button" (click)="testOnly()"><b>Test Only</b></button>
+    </div>
+
+    <div class="col"></div>
+
+  </div>
+
+</div>

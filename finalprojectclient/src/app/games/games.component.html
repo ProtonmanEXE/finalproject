@@ -1,0 +1,22 @@
+<div class="row">
+
+  <div class="col d-flex flex-row">
+
+    <div class="col"></div>
+
+    <div class="col-lg-8 col-sm-8 col-md-4 mt-5 mb-3 card">
+      <h3 class="mt-3">Your Game Library</h3>
+
+      <table class="mt-3">
+        <tr *ngFor="let i of games">
+          <td><a href="http://localhost:8080/game">
+            <b>{{ i }}</b></a></td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="col"></div>
+
+  </div>
+
+</div>

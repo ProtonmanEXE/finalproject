@@ -1,0 +1,49 @@
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
+
+  <div class="container-fluid">
+
+    <div class="d-flex flex-row">
+      <div class="navbar-brand">
+        <h5><a [routerLink]="['/']"><b>MegaRaves&nbsp;<i class="bi bi-controller"></i></b></a></h5>
+      </div>
+
+      <div class="input-group">
+        <input type="text"
+        placeholder="Search for game"
+        class="form-control">
+        <span class="input-group-btn">
+          <button class="btn btn-warning bigger" type="button" (click)="findGame()">
+            <b><i class="bi bi-search"></i></b></button>
+        </span>
+      </div>
+    </div>
+
+    <div class="d-flex flex-row" style="margin-right: 80px">
+      <span>
+        <button type="button"
+          class="btn btn-outline-dark noborders"
+          (click)="goToKaboomGames()">
+          <b>MegaRaves Games!</b></button>
+      </span>
+
+      <!-- *ngIf="!isUserLoggedIn -->
+      <span>
+        <button type="button"
+          class="btn btn-outline-dark noborders"
+          style="width: 130%"
+          [routerLink]="['/login']">
+          <b>Login</b></button>
+      </span>
+
+      <!-- *ngIf="isUserLoggedIn" -->
+      <span>
+        <button type="button"
+          class="btn btn-outline-dark noborders"
+          style="width: 130%"
+          (click)="logout()">
+          <b>Logout</b></button>
+      </span>
+    </div>
+  </div>
+
+</nav>

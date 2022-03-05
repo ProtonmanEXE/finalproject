@@ -1,0 +1,17 @@
+a {
+  text-decoration: none;
+  color: black;
+}
+
+td {
+  padding-left: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border: solid 2px black;
+  transition: background-color 1s;
+  font-size: larger;
+}
+
+td:hover {
+  background-color: grey;
+}

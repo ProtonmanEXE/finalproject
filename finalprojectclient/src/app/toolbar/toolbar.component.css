@@ -1,0 +1,25 @@
+input {
+  width: 300%;
+  border: solid 1px black;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.body {
+  color: white;
+}
+
+.bigger {
+  border: solid 1px black;
+  border-radius: 0px 5px 5px 0px;
+  height: 101%;
+}
+
+.noborders {
+  border: none;
+  margin-left: 20px;
+  margin-right: 20px;
+}
