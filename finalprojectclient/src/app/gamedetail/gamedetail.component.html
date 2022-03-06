@@ -1,1 +1,82 @@
-<p>gamedetail works!</p>
+<div class="row">
+
+  <div class="col d-flex flex-row">
+
+    <div class="col"></div>
+
+    <div class="col-sm-8 col-md-9 mt-5 mb-3 card">
+
+      <div class="row g-0">
+
+        <div class="col-md-4">
+          <img src="{{ game.backgroundImageUrl }}" class="img-fluid rounded-start">
+
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Release Date:
+              <em><b>{{ game.releasedDate }}</b></em></li>
+            <li class="list-group-item">ESRB Ratings:
+              <em><b>{{ game.esrbRating }}</b></em></li>
+            <li class="list-group-item">Genres:
+              <span *ngFor="let g of game.genres">
+                <b>{{ g }}&nbsp;</b>
+              </span>
+            </li>
+          </ul>
+
+          <button class="btn btn-outline-dark noborders">
+            <i class="bi bi-postcard-heart"></i></button>
+        </div>
+
+        <div class="col-md-8">
+
+          <div class="card-body">
+            <h3 class="card-title"><b>{{ game.name }}</b></h3>
+
+            <span class="card-text">
+              <div [innerHTML]="htmlString"></div>
+            </span>
+
+            <p class="mt-5" style="display: inline-block;">
+              <img src="assets\metacritic.png" alt="metacritic" style="width:20%;">
+
+              <span style="font-size: larger"><b><em>: {{ game.metacriticRating }}</em></b></span>
+            </p>
+
+            <p>Metacritic Link:
+              <a href="{{ game.metacriticUrl }}">
+                <em>{{ game.metacriticUrl }}</em></a>
+            </p>
+
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item"></li>
+              <li class="list-group-item">
+                <span>Available platforms:&nbsp;</span>
+
+                <span *ngFor="let p of game.platforms">
+                  <b><u>{{ p }}</u></b>&nbsp;
+                </span>
+              </li>
+              <li class="list-group-item">
+                <span>Can be purchased from:&nbsp;</span>
+
+                <span>
+                  <span *ngFor="let s of game.stores">
+                    <b><u>{{ s }}</u></b>&nbsp;
+                  </span>
+
+                </span>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="col"></div>
+  </div>
+
+</div>
+

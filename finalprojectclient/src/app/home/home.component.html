@@ -1,1 +1,43 @@
-<p>home works!</p>
+<div class="mt-3 ms-5 title">
+  <span *ngIf="isUserLoggedIn; else notLoggedIn">
+    <h1><em>Welcome {{ userName }}, these are the trending games</em></h1>
+  </span>
+
+  <ng-template #notLoggedIn>
+    <span><h1><em>#TRENDING GAMES</em></h1></span>
+  </ng-template>
+</div>
+
+<div class="row">
+
+  <div class="d-flex flex-wrap justify-content-evenly mt-1">
+
+    <div class="card" style="width: 390px;" *ngFor="let i of topTenGames">
+      <a [routerLink]="['/gamedetail/', i.gameId]">
+        <img src="{{ i.backgroundImageUrl }}" class="card-img-top">
+      </a>
+
+      <div class="card-body">
+        <h5 class="card-title"><b>{{ i.name }}</b></h5>
+      </div>
+
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Release Date: <em>{{ i.releasedDate }}</em></li>
+        <li class="list-group-item">ESRB Ratings: <em>{{ i.esrbRating }}</em></li>
+        <li class="list-group-item">Genres:
+          <span *ngFor="let g of i.genres">
+            {{ g }}
+          </span>
+        </li>
+      </ul>
+
+      <div class="card-body">
+        <button class="btn btn-outline-dark noborders" (click)="saveToWishlist(i.gameId)">
+          <i class="bi bi-postcard-heart"></i></button>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

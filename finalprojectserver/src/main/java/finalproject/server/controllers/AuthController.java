@@ -32,11 +32,13 @@ public class AuthController {
     @Autowired
     private JwtUtil jwtUtil;
 
+    // intercept route with authenticate and check against user db (MySQL)
     @PostMapping(path="/authenticate")
     public ResponseEntity<?> createAuToken(
         @RequestBody AuthenticationRequest auRequest) throws Exception {
-        
         System.out.println("Starting to authenticate...");
+
+        // authenticate user name and password
         try {
             auMgr.authenticate(new UsernamePasswordAuthenticationToken(
                 auRequest.getUserName(), auRequest.getPassword()));
@@ -45,9 +47,11 @@ public class AuthController {
                 "Incorrect username and/or password");
         } 
         
+        // create UserDetail Object
         final UserDetails userDetails = new User(
             auRequest.getUserName(), auRequest.getPassword(), new ArrayList<>());
 
+        // user UserDetail Object to generate token
         final String jwt = jwtUtil.generateToken(userDetails);
 
         System.out.println("jwt >>> " +jwt);

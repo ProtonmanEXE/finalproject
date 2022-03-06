@@ -48,9 +48,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // Enable CORS and disable CSRF, otherwise, 
         // Spring Security blocks all POST request
         http = http.cors().and().csrf().disable();
+
+
 		http.authorizeRequests()
-            .antMatchers("/authenticate").permitAll()
-            .antMatchers("/game").permitAll()
+            .antMatchers("/authenticate", "/game", "/api/toptengames").permitAll()
+            .antMatchers("/api/gamedetails/**").hasRole("USER")
             .antMatchers("/hello").hasRole("USER")
             // .anyRequest().authenticated()
             .and()

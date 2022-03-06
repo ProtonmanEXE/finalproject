@@ -4,10 +4,14 @@
 
     <div class="d-flex flex-row">
       <div class="navbar-brand">
-        <h5><a [routerLink]="['/']"><b>MegaRaves&nbsp;<i class="bi bi-controller"></i></b></a></h5>
+        <h5>
+          <a [routerLink]="['/']">
+          <b>MegaRaves&nbsp;<i class="bi bi-controller"></i></b>
+          </a>
+        </h5>
       </div>
 
-      <div class="input-group">
+      <div class="input-group col-md-4" *ngIf="isUserLoggedIn">
         <input type="text"
         placeholder="Search for game"
         class="form-control">
@@ -19,15 +23,14 @@
     </div>
 
     <div class="d-flex flex-row" style="margin-right: 80px">
-      <span>
+      <span *ngIf="isUserLoggedIn">
         <button type="button"
           class="btn btn-outline-dark noborders"
           (click)="goToKaboomGames()">
           <b>MegaRaves Games!</b></button>
       </span>
 
-      <!-- *ngIf="!isUserLoggedIn -->
-      <span>
+      <span *ngIf="!isUserLoggedIn">
         <button type="button"
           class="btn btn-outline-dark noborders"
           style="width: 130%"
@@ -35,8 +38,7 @@
           <b>Login</b></button>
       </span>
 
-      <!-- *ngIf="isUserLoggedIn" -->
-      <span>
+      <span *ngIf="isUserLoggedIn">
         <button type="button"
           class="btn btn-outline-dark noborders"
           style="width: 130%"

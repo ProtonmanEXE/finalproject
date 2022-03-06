@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AuthenticationService } from '../shared/authentication.service';
 
 @Component({
@@ -9,31 +10,34 @@ import { AuthenticationService } from '../shared/authentication.service';
 })
 export class ToolbarComponent implements OnInit {
 
-  isUserLoggedIn: boolean;
-  activateGuard: boolean;
+  private firstObsSub!: Subscription;
+
+  isUserLoggedIn!: boolean;
 
   constructor(private router: Router,
               private authSvc: AuthenticationService) {
-    this.isUserLoggedIn = authSvc.isUserLoggedIn();
-    this.activateGuard = false;
   }
 
   ngOnInit(): void {
+    this.firstObsSub = this.authSvc.customObs.subscribe(boolean => {
+      this.isUserLoggedIn = boolean
+    })
   }
 
   findGame() {
     if (this.authSvc.isUserLoggedIn()) {
       this.router.navigate(["/gamedetail"])
-    } else null
+    } else console.log("find game print" +this.isUserLoggedIn)
   }
 
   goToKaboomGames() {
     if (this.authSvc.isUserLoggedIn()) {
       this.router.navigate(["/games"])
-    } else null
+    } else console.log("goToKaboomGames" +this.isUserLoggedIn)
   }
 
   logout() {
     this.authSvc.logOut();
+    this.router.navigate(["/"])
   }
 }

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { lastValueFrom, map } from 'rxjs';
+import { lastValueFrom, map, Observable, Observer } from 'rxjs';
 import { ResponseMessage, UserLogin } from './model';
 
 export class User {
@@ -10,9 +10,18 @@ export class User {
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthenticationService {
 
-  constructor(private http: HttpClient) { }
+  customObs: Observable<boolean>;
+
+  constructor(private http: HttpClient) {
+    this.customObs = new Observable((observer: Observer<any>) => {
+      setInterval(() => {
+        observer.next(this.isUserLoggedIn());
+      }, 1000)
+    });
+  }
 
   // Provide username and password for authentication, and once authentication is successful,
   // store JWT token in session
@@ -38,4 +47,5 @@ export class AuthenticationService {
   logOut() {
     sessionStorage.removeItem("username");
     sessionStorage.removeItem("token");
-  }}
+  }
+}

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping(produces = MediaType.TEXT_HTML_VALUE)
-public class GameController {
+public class KaboomController {
 
     @GetMapping(path="/game")
     public String getKaboom() {

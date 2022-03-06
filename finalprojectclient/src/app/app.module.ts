@@ -13,6 +13,7 @@ import { GamesComponent } from './games/games.component';
 import { GamedetailComponent } from './gamedetail/gamedetail.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { HtppInterceptorService } from './shared/htpp-interceptor.service';
+import { SignupComponent } from './signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { HtppInterceptorService } from './shared/htpp-interceptor.service';
     GamesComponent,
     GamedetailComponent,
     ToolbarComponent,
+    SignupComponent,
   ],
   imports: [
     BrowserModule,

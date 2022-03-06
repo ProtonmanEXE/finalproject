@@ -1,0 +1,15 @@
+img {
+  vertical-align: bottom
+}
+
+.card-body {
+  border-left: 3px solid lightgray;
+}
+
+.noborders {
+  border: none;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 10px;
+  font-size: 250%;
+}
