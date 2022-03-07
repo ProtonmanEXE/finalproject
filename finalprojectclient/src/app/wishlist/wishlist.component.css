@@ -1,0 +1,32 @@
+a {
+  text-decoration: none;
+  color: black;
+}
+
+img {
+  max-height: 100px;
+  max-width: 180px;
+}
+
+tr {
+  border: solid 2px black;
+}
+
+td {
+  vertical-align: middle;
+}
+
+.centrecolumn {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  min-width: 400px;
+}
+
+tr {
+  transition: background-color 1s;
+  font-size: larger;
+}
+
+tr:hover {
+  background-color: grey;
+}

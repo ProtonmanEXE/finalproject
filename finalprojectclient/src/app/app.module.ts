@@ -14,6 +14,7 @@ import { GamedetailComponent } from './gamedetail/gamedetail.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { HtppInterceptorService } from './shared/htpp-interceptor.service';
 import { SignupComponent } from './signup/signup.component';
+import { WishlistComponent } from './wishlist/wishlist.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { SignupComponent } from './signup/signup.component';
     GamedetailComponent,
     ToolbarComponent,
     SignupComponent,
+    WishlistComponent,
   ],
   imports: [
     BrowserModule,

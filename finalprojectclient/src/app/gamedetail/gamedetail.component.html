@@ -23,7 +23,9 @@
             </li>
           </ul>
 
-          <button class="btn btn-outline-dark noborders">
+          <button class="btn btn-outline-dark noborders"
+            title="Add to wishlist"
+            (click)="saveToWishlist(game)">
             <i class="bi bi-postcard-heart"></i></button>
         </div>
 
@@ -39,7 +41,9 @@
             <p class="mt-5" style="display: inline-block;">
               <img src="assets\metacritic.png" alt="metacritic" style="width:20%;">
 
-              <span style="font-size: larger"><b><em>: {{ game.metacriticRating }}</em></b></span>
+              <span style="font-size: larger">
+                <b><em>: {{ game.metacriticRating }}</em></b>
+              </span>
             </p>
 
             <p>Metacritic Link:
@@ -78,5 +82,12 @@
     <div class="col"></div>
   </div>
 
+</div>
+
+<div style="color: white; margin-left: 20px">
+  <em>
+    Powered by
+    <a href="https://rawg.io/apidocs">RAWG Video Games</a>
+  </em>
 </div>
 

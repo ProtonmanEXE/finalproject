@@ -1,7 +1,8 @@
 import { GamedetailsService } from './../shared/gamedetails.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { GameCard, GameDetails } from './../shared/model';
+import { GameDetails } from './../shared/model';
+import { AuthenticationService } from '../shared/authentication.service';
 
 @Component({
   selector: 'app-gamedetail',
@@ -17,7 +18,8 @@ export class GamedetailComponent implements OnInit {
   gameId!: number
 
   constructor(private activatedRoute: ActivatedRoute,
-              private gameDetailSvc: GamedetailsService) { }
+              private gameDetailSvc: GamedetailsService,
+              private authSvc: AuthenticationService) { }
 
   ngOnInit(): void {
     this.gameId = this.activatedRoute.snapshot.params["gameId"];
@@ -30,6 +32,16 @@ export class GamedetailComponent implements OnInit {
       }).catch(() => {
         console.log("Game not found")
       })
+  }
+
+  saveToWishlist(game: GameDetails) {
+    if (this.authSvc.isUserLoggedIn()) {
+      this.gameDetailSvc.saveToWishlistTwo(game)
+      .then(() => alert(
+        game.name +" added to wishlist."))
+      .catch(() => alert(
+        "Failed to save to wishlist or game may already be inside wishlist."))
+    } else alert("Please log in.")
   }
 
 }

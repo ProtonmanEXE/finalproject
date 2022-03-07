@@ -28,7 +28,7 @@ export class AuthenticationService {
   authenticate(user: UserLogin):Promise<void> {
     console.info("user >>> " +user);
 
-    return lastValueFrom(this.http.post<any>("http://localhost:8080/authenticate", user)
+    return lastValueFrom(this.http.post<any>("/authenticate", user)
       .pipe(map((userData: { jwt: string; }) => {
           sessionStorage.setItem("username", user.userName);
           let tokenStr = "Bearer " + userData.jwt;
@@ -40,7 +40,6 @@ export class AuthenticationService {
 
   isUserLoggedIn() {
     let user = sessionStorage.getItem("username");
-    console.log(!(user === null));
     return !(user === null);
   }
 

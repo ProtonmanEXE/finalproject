@@ -11,7 +11,6 @@ export class HtppInterceptorService implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler) {
 
     const jwt = sessionStorage.getItem("token");
-    console.info("token >>> " +jwt);
 
     if (sessionStorage.getItem("username") && sessionStorage.getItem("token")) {
       const cloned = req.clone({

@@ -24,6 +24,13 @@ export interface GameDetails extends GameCard {
   platforms: String[]
 }
 
+export interface GameSummary {
+  name: String
+  releasedDate: String
+  backgroundImageUrl: String
+  gameId: number
+}
+
 export interface ResponseMessage {
   status: string
 }

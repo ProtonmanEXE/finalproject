@@ -16,13 +16,22 @@
         placeholder="Search for game"
         class="form-control">
         <span class="input-group-btn">
-          <button class="btn btn-warning bigger" type="button" (click)="findGame()">
+          <button class="btn btn-warning bigger"
+            type="button"
+            (click)="findGame()">
             <b><i class="bi bi-search"></i></b></button>
         </span>
       </div>
     </div>
 
     <div class="d-flex flex-row" style="margin-right: 80px">
+      <span *ngIf="isUserLoggedIn">
+        <button type="button"
+          class="btn btn-outline-dark noborders"
+          (click)="goToWishlist()">
+          <b>My Wishlist&nbsp;<i class="bi bi-postcard-heart"></i></b></button>
+      </span>
+
       <span *ngIf="isUserLoggedIn">
         <button type="button"
           class="btn btn-outline-dark noborders"
@@ -33,7 +42,7 @@
       <span *ngIf="!isUserLoggedIn">
         <button type="button"
           class="btn btn-outline-dark noborders"
-          style="width: 130%"
+          style="width: 115%"
           [routerLink]="['/login']">
           <b>Login</b></button>
       </span>
@@ -41,7 +50,7 @@
       <span *ngIf="isUserLoggedIn">
         <button type="button"
           class="btn btn-outline-dark noborders"
-          style="width: 130%"
+          style="width: 115%"
           (click)="logout()">
           <b>Logout</b></button>
       </span>

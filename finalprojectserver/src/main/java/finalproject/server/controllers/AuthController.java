@@ -40,6 +40,9 @@ public class AuthController {
 
         // authenticate user name and password
         try {
+            System.out.println("auRequest.getUserName() >>> " +auRequest.getUserName());
+            System.out.println("auRequest.getPassword() >>> " +auRequest.getPassword());
+
             auMgr.authenticate(new UsernamePasswordAuthenticationToken(
                 auRequest.getUserName(), auRequest.getPassword()));
         } catch (BadCredentialsException e) {

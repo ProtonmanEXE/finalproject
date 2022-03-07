@@ -120,43 +120,16 @@ public class GameDetailService {
             game.setGameId(result.getJsonNumber("id").intValue());
             game.setName(result.getString("name"));
             game.setDescription(result.getString("description")); 
-            try {
-                game.setMetacriticRating(String.valueOf(result.getJsonNumber("metacritic").intValue()));
-            } catch (Exception e) {
-                game.setMetacriticRating("No rating available");
-            }
             game.setReleasedDate(result.getString("released")); 
             game.setBackgroundImageUrl(result.getString("background_image")); 
             game.setMetacriticUrl(result.getString("metacritic_url")); 
-            JsonArray platformsJsonArray = result.getJsonArray("platforms");
-            List<String> platforms = new ArrayList<String>();      
-            for (JsonValue p : platformsJsonArray) {
-                platforms.add(p.asJsonObject().getJsonObject("platform").getString("name"));
-            }
-            game.setPlatforms(platforms);
-            logging.info("Platforms >>> " +game.getPlatforms());
 
-            List<String> stores = new ArrayList<String>();  
-            JsonArray storesJsonArray = result.getJsonArray("stores");  
-            logging.info("storesJsonArray: %s".formatted(storesJsonArray));
-            if (!result.getJsonArray("stores").isEmpty()) {
-                storesJsonArray = result.getJsonArray("stores");
-                for (JsonValue s : storesJsonArray) {
-                    stores.add(s.asJsonObject().getJsonObject("store").getString("name"));
-                    logging.info(s.asJsonObject().getJsonObject("store").getString("name"));
-                }
-            } else {
-                stores.add("Not yet available in online stores");
+            try {
+                game.setMetacriticRating(
+                    String.valueOf(result.getJsonNumber("metacritic").intValue()));
+            } catch (Exception e) {
+                game.setMetacriticRating("No rating available");
             }
-            game.setStores(stores);
-            logging.info("Stores >>> " +game.getStores());
-
-            JsonArray genresJsonArray = result.getJsonArray("genres");
-            List<String> genres = new ArrayList<String>();      
-            for (JsonValue g : genresJsonArray) {
-                genres.add(g.asJsonObject().getString("name"));
-            }
-            game.setGenres(genres);
 
             try {
                 game.setEsrbRating(
@@ -164,7 +137,35 @@ public class GameDetailService {
             } catch (Exception e) {
                 game.setEsrbRating("No rating available");
             }
-            logging.info("ESRB >>> " +game.getEsrbRating());
+            
+            JsonArray platformsJsonArray = result.getJsonArray("platforms");
+            List<String> platforms = new ArrayList<String>();      
+            for (JsonValue p : platformsJsonArray) {
+                platforms.add(
+                    p.asJsonObject().getJsonObject("platform").getString("name"));
+            }
+            game.setPlatforms(platforms);
+
+            List<String> stores = new ArrayList<String>();  
+            JsonArray storesJsonArray = result.getJsonArray("stores");  
+            logging.info("storesJsonArray: %s".formatted(storesJsonArray));
+            if (!result.getJsonArray("stores").isEmpty()) {
+                storesJsonArray = result.getJsonArray("stores");
+                for (JsonValue s : storesJsonArray) {
+                    stores.add(
+                        s.asJsonObject().getJsonObject("store").getString("name"));
+                }
+            } else {
+                stores.add("Not yet available in online stores");
+            }
+            game.setStores(stores);
+
+            JsonArray genresJsonArray = result.getJsonArray("genres");
+            List<String> genres = new ArrayList<String>();      
+            for (JsonValue g : genresJsonArray) {
+                genres.add(g.asJsonObject().getString("name"));
+            }
+            game.setGenres(genres);
             
         } catch (Exception e) { 
             e.printStackTrace();

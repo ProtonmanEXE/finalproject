@@ -1,6 +1,6 @@
 <div class="mt-3 ms-5 title">
   <span *ngIf="isUserLoggedIn; else notLoggedIn">
-    <h1><em>Welcome {{ userName }}, these are the trending games</em></h1>
+    <h1><em>Welcome {{ userName }}, these are the trending games:</em></h1>
   </span>
 
   <ng-template #notLoggedIn>
@@ -10,10 +10,10 @@
 
 <div class="row">
 
-  <div class="d-flex flex-wrap justify-content-evenly mt-1">
+  <div class="d-flex flex-wrap justify-content-evenly">
 
     <div class="card" style="width: 390px;" *ngFor="let i of topTenGames">
-      <a [routerLink]="['/gamedetail/', i.gameId]">
+      <a (click)="goToGameDetail(i.gameId)">
         <img src="{{ i.backgroundImageUrl }}" class="card-img-top">
       </a>
 
@@ -32,12 +32,21 @@
       </ul>
 
       <div class="card-body">
-        <button class="btn btn-outline-dark noborders" (click)="saveToWishlist(i.gameId)">
+        <button class="btn btn-outline-dark noborders"
+          title="Add to wishlist"
+          (click)="saveToWishlist(i)">
           <i class="bi bi-postcard-heart"></i></button>
       </div>
 
     </div>
 
+  </div>
+
+  <div style="color: white; margin-left: 20px">
+    <em>
+      Powered by
+      <a href="https://rawg.io/apidocs">RAWG Video Games</a>
+    </em>
   </div>
 
 </div>

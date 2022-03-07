@@ -44,10 +44,19 @@ export class HomeComponent implements OnInit {
     return sessionStorage.getItem("username")
   }
 
-  saveToWishlist(gameId: number) {
+  goToGameDetail(gameId: number) {
     if (this.authSvc.isUserLoggedIn()) {
-      this.gameDetailSvc.saveToWishlist(gameId)
-      this.router.navigate(["/wishlist"])
-    } else console.log("find game print" +this.isUserLoggedIn)
+      this.router.navigate(["/gamedetail/", gameId])
+    } else alert("Please log in.")
+  }
+
+  saveToWishlist(game: GameCard) {
+    if (this.authSvc.isUserLoggedIn()) {
+      this.gameDetailSvc.saveToWishlist(game)
+      .then(() => alert(
+        game.name +" added to wishlist."))
+      .catch(() => alert(
+        "Failed to save to wishlist or game may already be inside wishlist."))
+    } else alert("Please log in.")
   }
 }

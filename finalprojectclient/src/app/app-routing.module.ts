@@ -1,3 +1,4 @@
+import { WishlistComponent } from './wishlist/wishlist.component';
 import { SignupComponent } from './signup/signup.component';
 import { GamedetailComponent } from './gamedetail/gamedetail.component';
 import { GamesComponent } from './games/games.component';
@@ -11,6 +12,7 @@ const routes: Routes = [
   { path: "login", component: LoginComponent },
   { path: "signup", component: SignupComponent },
   { path: "games", component: GamesComponent },
+  { path: "wishlist", component: WishlistComponent },
   { path: "gamedetail/:gameId", component: GamedetailComponent },
   { path: "**", redirectTo: "", pathMatch: "full" }
 ];

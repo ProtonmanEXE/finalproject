@@ -36,6 +36,12 @@ export class ToolbarComponent implements OnInit {
     } else console.log("goToKaboomGames" +this.isUserLoggedIn)
   }
 
+  goToWishlist() {
+    if (this.authSvc.isUserLoggedIn()) {
+      this.router.navigate(["/wishlist"])
+    } else console.log("wishlist" +this.isUserLoggedIn)
+  }
+
   logout() {
     this.authSvc.logOut();
     this.router.navigate(["/"])

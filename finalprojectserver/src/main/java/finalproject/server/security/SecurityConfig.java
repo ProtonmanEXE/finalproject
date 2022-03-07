@@ -49,10 +49,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // Spring Security blocks all POST request
         http = http.cors().and().csrf().disable();
 
-
 		http.authorizeRequests()
             .antMatchers("/authenticate", "/game", "/api/toptengames").permitAll()
             .antMatchers("/api/gamedetails/**").hasRole("USER")
+            .antMatchers("/jdbc/locked/**").hasRole("USER")
             .antMatchers("/hello").hasRole("USER")
             // .anyRequest().authenticated()
             .and()
@@ -74,6 +74,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
-
     
 }

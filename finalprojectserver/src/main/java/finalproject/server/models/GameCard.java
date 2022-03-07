@@ -2,6 +2,8 @@ package finalproject.server.models;
 
 import java.util.List;
 
+import org.springframework.jdbc.support.rowset.SqlRowSet;
+
 public class GameCard {
     
     private String name;
@@ -57,6 +59,15 @@ public class GameCard {
 
     public void setGameId(Integer gameId) {
         this.gameId = gameId;
+    }
+
+    public static GameCard populate(SqlRowSet rs) {
+        final GameCard game = new GameCard();
+        game.setGameId(rs.getInt("game_id"));
+        game.setName(rs.getString("title"));
+        game.setBackgroundImageUrl(rs.getString("image_url"));
+        game.setReleasedDate(rs.getString("release_date"));
+        return game;
     }
 
 }

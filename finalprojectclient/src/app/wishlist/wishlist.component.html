@@ -1,0 +1,40 @@
+<div class="row">
+
+  <div class="col d-flex flex-row">
+
+    <div class="col"></div>
+
+    <div class="col-lg-8 col-sm-8 col-md-4 mt-5 mb-3 card">
+      <h3 class="mt-3">
+        {{ userName }}'s Wishlist <i class="bi bi-postcard-heart"></i>
+      </h3>
+
+      <table class="mt-3">
+        <tr *ngFor="let w of wishlist">
+          <td style="vertical-align: text-bottom">
+            <a [routerLink]="['/gamedetail/', w.gameId]">
+              <img src="{{ w.backgroundImageUrl }}">
+            </a>
+          </td>
+          <td class="centrecolumn">
+            <a [routerLink]="['/gamedetail/', w.gameId]">
+              <div><b>{{ w.name }}</b></div>
+              <div class="mt-2" style="font-size: small">
+                Release date: {{ w.releasedDate }}</div>
+            </a>
+          </td>
+          <td>
+            <button class="btn btn-outline-dark noborders"
+              (click)="deleteGameWish(w.gameId)">
+              <i class="bi bi-trash" ></i></button>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="col"></div>
+
+  </div>
+
+</div>
+
