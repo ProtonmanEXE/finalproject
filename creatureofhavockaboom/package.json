@@ -1,0 +1,22 @@
+{
+  "name": "mariov1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel src/creatureofhavoc.html -p 3000",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "kaboom": "^2000.2.9",
+    "parcel": "^2.3.2",
+    "parcel-plugin-static-files-copy": "^2.6.0",
+    "parcel-reporter-static-files-copy": "^1.3.4"
+  },
+  "staticFiles": {
+    "staticPath": "./src/static",
+    "watcherGlob": "**"
+  }
+}
