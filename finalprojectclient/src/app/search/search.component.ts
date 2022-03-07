@@ -1,35 +1,38 @@
-import { Router } from '@angular/router';
-import { GameCard } from './../shared/model';
-import { GamedetailsService } from './../shared/gamedetails.service';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthenticationService } from '../shared/authentication.service';
+import { GamedetailsService } from '../shared/gamedetails.service';
+import { GameCard } from '../shared/model';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-search',
+  templateUrl: './search.component.html',
+  styleUrls: ['./search.component.css']
 })
-export class HomeComponent implements OnInit {
+export class SearchComponent implements OnInit {
 
-  topTenGames!: GameCard[]
+  gameSearchResultsbyTitle!: GameCard[]
 
   userName!: string | null
+  search!: string;
   isUserLoggedIn!: boolean
 
   constructor(private gameDetailSvc: GamedetailsService,
               private authSvc: AuthenticationService,
+              private activatedRoute: ActivatedRoute,
               private router: Router) { }
 
   ngOnInit(): void {
-    this.gameDetailSvc.getTopTenGames()
-      .then(topten => {
-        this.topTenGames = topten
+    this.search = this.activatedRoute.snapshot.params["title"];
+    this.gameDetailSvc.getSearchResults(this.search)
+      .then(searchResults => {
+        this.gameSearchResultsbyTitle = searchResults
       }).catch(() => {
-        console.info("Top nine games not found")
+        console.info("Games not found")
       });
 
-    this.userName = this.getUserName()
+    this.userName = this.getUserName();
 
     this.isUserLoggedIn = this.authSvc.isUserLoggedIn()
   }
@@ -56,4 +59,5 @@ export class HomeComponent implements OnInit {
         "Failed to save to wishlist or game may already be inside wishlist."))
     } else alert("Please log in.")
   }
+
 }

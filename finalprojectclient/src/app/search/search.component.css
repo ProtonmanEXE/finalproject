@@ -1,0 +1,20 @@
+a {
+  cursor: pointer;
+}
+
+.card {
+  margin: 15px;
+  background-color: whitesmoke;
+}
+
+.title {
+  font-family: serif;
+  color: whitesmoke
+}
+
+.noborders {
+  border: none;
+  margin-left: 10px;
+  padding: 0%;
+  font-size: 200%;
+}

@@ -14,19 +14,26 @@ export class GamedetailsService {
     return lastValueFrom(this.http.get<GameCard[]>("/api/toptengames"))
   }
 
+  getSearchResults(search: string): Promise<GameCard[]> {
+    console.log("Before going to sb >>> " +search)
+    return lastValueFrom(this.http.get<GameCard[]>(
+      "/api/locked/searchbytitle/".concat(search.toString())))
+  }
+
   getGameDetails(gameId: number): Promise<GameDetails> {
     return lastValueFrom(
-      this.http.get<GameDetails>("/api/gamedetails/".concat(gameId.toString())))
+      this.http.get<GameDetails>(
+        "/api/locked/gamedetails/".concat(gameId.toString())))
   }
 
   saveToWishlist(gameCard: GameCard): Promise<ResponseMessage> {
     return lastValueFrom(
-      this.http.post<ResponseMessage>("/api/savegamedetails", gameCard))
+      this.http.post<ResponseMessage>("/api/locked/savegamedetails", gameCard))
   }
 
   saveToWishlistTwo(gameCard: GameDetails): Promise<ResponseMessage> {
     return lastValueFrom(
-      this.http.post<ResponseMessage>("/api/savegamedetails", gameCard))
+      this.http.post<ResponseMessage>("/api/locked/savegamedetails", gameCard))
   }
 
   getWishList(): Promise<GameSummary[]> {

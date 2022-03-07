@@ -9,10 +9,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(produces = MediaType.TEXT_HTML_VALUE)
 public class KaboomController {
 
-    @GetMapping(path="/game")
+    @GetMapping(path="/mrbean")
+    public String getMrBean() {
+        return "mrbean";
+    }
+
+    @GetMapping(path="/creatureofhavoc")
     public String getKaboom() {
-        System.out.println("Serving Kaboom game...");
-        return "game";
+        return "creatureofhavoc";
     }
     
 }

@@ -8,26 +8,26 @@ export interface UserFullDetails extends UserLogin {
 }
 
 export interface GameCard {
-  name: String
-  releasedDate: String
-  backgroundImageUrl: String
-  esrbRating: String
-  genres: String[]
+  name: string
+  releasedDate: string
+  backgroundImageUrl: string
+  esrbRating: string
+  genres: string[]
   gameId: number
 }
 
 export interface GameDetails extends GameCard {
-  description: String
+  description: string
   metacriticRating: number
-  metacriticUrl: String
-  stores: String[]
-  platforms: String[]
+  metacriticUrl: string
+  stores: string[]
+  platforms: string[]
 }
 
 export interface GameSummary {
-  name: String
-  releasedDate: String
-  backgroundImageUrl: String
+  name: string
+  releasedDate: string
+  backgroundImageUrl: string
   gameId: number
 }
 

@@ -24,7 +24,7 @@ import jakarta.json.JsonObjectBuilder;
 
 @RestController
 @RequestMapping(path="/api", produces = MediaType.APPLICATION_JSON_VALUE)
-@CrossOrigin("*")    
+// @CrossOrigin("*")    
 public class ApiController {
 
     @Autowired
@@ -35,10 +35,8 @@ public class ApiController {
 
     @GetMapping(path="/toptengames")
     public ResponseEntity<String> getTopTenGames() {
-        System.out.println("Getting top ten games...");
-
         JsonArrayBuilder gameJsonArray = Json.createArrayBuilder();
-        // gameDetailSvc.getTopTenGames() will create an array of top ten ShortGame
+        // gameDetailSvc.getTopTenGames() will create an array of top nine GameCard
         try {
             for (GameCard game : gameDetailSvc.getTopTenGames()) {
                 JsonObjectBuilder gameCardBuilder = Json.createObjectBuilder();
@@ -62,10 +60,36 @@ public class ApiController {
         }     
     }
 
-    @GetMapping(path="/gamedetails/{gameId}")
-    public ResponseEntity<String> getGameDetail(@PathVariable String gameId) {
-        System.out.println("Getting game Id >>> " +gameId);
+    @GetMapping(path="/locked/searchbytitle/{title}")
+    public ResponseEntity<String> searchByName(@PathVariable String title) {
+        JsonArrayBuilder gameJsonArray = Json.createArrayBuilder();
+        // gameDetailSvc.getTopTenGames() will create an array of nine GameCard
+        // matching closest search by name
+        try {
+            for (GameCard game : gameDetailSvc.searchByName(title)) {
+                JsonObjectBuilder gameCardBuilder = Json.createObjectBuilder();
+                gameCardBuilder.add("name", game.getName());
+                gameCardBuilder.add("releasedDate", game.getReleasedDate());
+                gameCardBuilder.add("backgroundImageUrl", game.getBackgroundImageUrl());
+                gameCardBuilder.add("esrbRating", game.getEsrbRating());
+                gameCardBuilder.add("gameId", game.getGameId());
+                gameCardBuilder.add("genres", Json.createArrayBuilder(game.getGenres()));
+                gameJsonArray.add(gameCardBuilder.build());
+            }
+            return ResponseEntity.ok().body(gameJsonArray.build().toString());
+        // if search is not successful, return error to client
+        } catch (Exception e) {  
+            e.printStackTrace();
+            JsonObject payload = Json.createObjectBuilder()
+                .add("message", "Error in finding games")
+                .build();
+            return ResponseEntity
+                .status(HttpStatus.NOT_FOUND).body(payload.toString());   
+        }     
+    }
 
+    @GetMapping(path="/locked/gamedetails/{gameId}")
+    public ResponseEntity<String> getGameDetail(@PathVariable String gameId) {
         GameDetails game = gameDetailSvc.getGameDetails(gameId);
         // gameDetailSvc.getTopTenGames() will create an array of top ten ShortGame
         try {
@@ -94,11 +118,9 @@ public class ApiController {
         }     
     }
 
-    @PostMapping(path="/savegamedetails", consumes=MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path="/locked/savegamedetails", consumes=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> saveToWishList(
         @RequestBody GameCard game, Authentication authentication) {
-        System.out.println("Saving to wishlist");
-
         try {
             gameDetailRepo.saveToWishList(game, authentication.getName());
             return ResponseEntity.status(HttpStatus.CREATED).body("");

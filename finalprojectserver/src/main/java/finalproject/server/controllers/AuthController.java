@@ -36,13 +36,9 @@ public class AuthController {
     @PostMapping(path="/authenticate")
     public ResponseEntity<?> createAuToken(
         @RequestBody AuthenticationRequest auRequest) throws Exception {
-        System.out.println("Starting to authenticate...");
 
         // authenticate user name and password
         try {
-            System.out.println("auRequest.getUserName() >>> " +auRequest.getUserName());
-            System.out.println("auRequest.getPassword() >>> " +auRequest.getPassword());
-
             auMgr.authenticate(new UsernamePasswordAuthenticationToken(
                 auRequest.getUserName(), auRequest.getPassword()));
         } catch (BadCredentialsException e) {
@@ -57,7 +53,6 @@ public class AuthController {
         // user UserDetail Object to generate token
         final String jwt = jwtUtil.generateToken(userDetails);
 
-        System.out.println("jwt >>> " +jwt);
         return ResponseEntity.ok(new AuthenticationResponse(jwt));        
     }
 

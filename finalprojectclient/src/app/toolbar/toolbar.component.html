@@ -12,13 +12,13 @@
       </div>
 
       <div class="input-group col-md-4" *ngIf="isUserLoggedIn">
-        <input type="text"
+        <input type="text" name="search" #search
         placeholder="Search for game"
         class="form-control">
         <span class="input-group-btn">
           <button class="btn btn-warning bigger"
             type="button"
-            (click)="findGame()">
+            (click)="findGames(search.value)">
             <b><i class="bi bi-search"></i></b></button>
         </span>
       </div>

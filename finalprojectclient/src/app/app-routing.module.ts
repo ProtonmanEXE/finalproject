@@ -1,3 +1,4 @@
+import { SearchComponent } from './search/search.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
 import { SignupComponent } from './signup/signup.component';
 import { GamedetailComponent } from './gamedetail/gamedetail.component';
@@ -14,11 +15,12 @@ const routes: Routes = [
   { path: "games", component: GamesComponent },
   { path: "wishlist", component: WishlistComponent },
   { path: "gamedetail/:gameId", component: GamedetailComponent },
+  { path: "search/:title", component: SearchComponent },
   { path: "**", redirectTo: "", pathMatch: "full" }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {onSameUrlNavigation: "reload"})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

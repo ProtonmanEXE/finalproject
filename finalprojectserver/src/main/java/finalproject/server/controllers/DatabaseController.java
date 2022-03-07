@@ -39,8 +39,6 @@ public class DatabaseController {
 
     @GetMapping(path="/locked/wishlist")
     public ResponseEntity<String> saveToWishList(Authentication authentication) {
-        System.out.println("Getting wishlist...");
-
         JsonArrayBuilder gameJsonArray = Json.createArrayBuilder();
         // gameDetailSvc.getTopTenGames() will create a wishlist (array)
         try {
@@ -64,8 +62,6 @@ public class DatabaseController {
     @GetMapping(path="/locked/deletewish/{gameId}")
     public ResponseEntity<String> deleteWish(
         @PathVariable String gameId, Authentication authentication) {
-        System.out.println("Deleting >>> " +Integer.valueOf(gameId));
-
         try {
             gameDetailRepo.deleteWish(Integer.valueOf(gameId), authentication.getName());
             return ResponseEntity.status(HttpStatus.OK).body("");
@@ -78,8 +74,6 @@ public class DatabaseController {
 
     @PostMapping(path="/registration", consumes=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> saveToWishList(@RequestBody FullUserDetails newUser) {
-        System.out.println("Saving user to MySQL");
-
         try {
             userRepo.saveUser(newUser);
             emailSvc.sendEmail(newUser.getUserName(), newUser.getEmail());

@@ -11,7 +11,7 @@ import { AuthenticationService } from '../shared/authentication.service';
 })
 export class GamedetailComponent implements OnInit {
 
-  htmlString!: String;
+  htmlString!: string;
 
   game!: GameDetails
 
@@ -23,8 +23,6 @@ export class GamedetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.gameId = this.activatedRoute.snapshot.params["gameId"];
-    console.log("id >>> " +this.gameId)
-
     this.gameDetailSvc.getGameDetails(this.gameId)
       .then(game => {
         this.game = game

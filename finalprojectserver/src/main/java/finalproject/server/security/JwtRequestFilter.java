@@ -40,16 +40,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         String username = null;
         String jwt = null;
 
-        System.out.println("JwtRequestFilter step 1");
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             jwt = authorizationHeader.substring(7);
-            System.out.println("jwt" +jwt);
-
             username = jwtUtil.getUsernameFromToken(jwt);
-            System.out.println("username" +username);
         }
 
-        System.out.println("JwtRequestFilter step 2");
         if (username != null && 
             SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = new User(
@@ -65,9 +60,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                     .setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
                 SecurityContextHolder.getContext().setAuthentication(
                     usernamePasswordAuthenticationToken);
-                System.out.println("securitycontext success!");
             } else {
-                System.out.println("validateToken fail!");
                 resp.setStatus(403);
                 resp.setContentType(org.springframework.http.MediaType.APPLICATION_JSON_VALUE);
                 try (PrintWriter pw = resp.getWriter()) {
@@ -79,7 +72,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             }
         }
 
-        System.out.println("JwtRequestFilter step final - chain");
         chain.doFilter(req, resp);
     }
     

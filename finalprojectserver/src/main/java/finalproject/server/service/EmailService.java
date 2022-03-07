@@ -19,13 +19,11 @@ public class EmailService {
         message.setSubject("MegaRaves: Sign-up Confirmation"); 
         message.setText(            
             "Dear " +userName + ",\n\nThank you for signing up with MegaRaves. " +
-            "Please proceed to log in to your account to enjoy our services\n\n" +
+            "Please proceed to log in to your account to enjoy our games.\n\n" +
             "Yours sincerely,\n" + "Team MegaRaves"
         );
         
         emailSender.send(message);
-
-        System.out.println("EmailService >>> email sent successfully...");
 
     }
 }

@@ -5,8 +5,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
@@ -27,11 +25,11 @@ import static finalproject.server.constants.Constants.*;
 @Service
 public class GameDetailService {
     
-    private final static Logger logging = LoggerFactory.getLogger(GameDetailService.class);
+    // private final static Logger logging = LoggerFactory.getLogger(GameDetailService.class);
 
     public List<GameCard> getTopTenGames() {
 
-        // build url to search by title, getting json object
+        // build url to search for top nine games, getting json object
         final String url = UriComponentsBuilder // url to search by title
                 .fromUriString(URL_TOPTENGAMES)  
                 .queryParam("key", ENV_RAWG_API_KEY) 
@@ -39,7 +37,6 @@ public class GameDetailService {
                 .queryParam("page_size", "9")
                 .queryParam("ordering", "-rating")
                 .toUriString();
-        logging.info("url > " +url);
 
         final RequestEntity<Void> req = RequestEntity.get(url).build();
         final RestTemplate template = new RestTemplate();
@@ -63,10 +60,16 @@ public class GameDetailService {
                 GameCard game = new GameCard();
                 
                 game.setName(i.asJsonObject().getString("name"));
-                game.setReleasedDate(i.asJsonObject().getString("released")); 
                 game.setBackgroundImageUrl(
                     i.asJsonObject().getString("background_image")); 
                 game.setGameId(i.asJsonObject().getJsonNumber("id").intValue());
+
+                try {
+                    game.setReleasedDate(i.asJsonObject().getString("released")); 
+                } catch (Exception e) {
+                    game.setReleasedDate("Unknown");
+                }
+
                 try {
                     game.setEsrbRating(
                         i.asJsonObject()
@@ -74,13 +77,14 @@ public class GameDetailService {
                 } catch (Exception e) {
                     game.setEsrbRating("No rating available");
                 }
+
                 JsonArray genresJsonArray = i.asJsonObject().getJsonArray("genres");
                 List<String> genres = new ArrayList<String>();      
                 for (JsonValue g : genresJsonArray) {
                     genres.add(g.asJsonObject().getString("name"));
                 }
-                
                 game.setGenres(genres);
+                
                 store.add(game);
             }
         } catch (Exception e) { 
@@ -97,7 +101,6 @@ public class GameDetailService {
                 .fromUriString(URL_GAME.concat(gameId))  
                 .queryParam("key", ENV_RAWG_API_KEY) 
                 .toUriString();
-        logging.info("url > " +url);
 
         final RequestEntity<Void> req = RequestEntity.get(url).build();
         final RestTemplate template = new RestTemplate();
@@ -116,13 +119,17 @@ public class GameDetailService {
             final JsonObject result = reader.readObject();
 
         // create GameDetails object and compile the list of top nine games
-
             game.setGameId(result.getJsonNumber("id").intValue());
             game.setName(result.getString("name"));
             game.setDescription(result.getString("description")); 
-            game.setReleasedDate(result.getString("released")); 
             game.setBackgroundImageUrl(result.getString("background_image")); 
             game.setMetacriticUrl(result.getString("metacritic_url")); 
+
+            try {
+                game.setReleasedDate(result.getString("released")); 
+            } catch (Exception e) {
+                game.setReleasedDate("Unknown");
+            }
 
             try {
                 game.setMetacriticRating(
@@ -148,7 +155,6 @@ public class GameDetailService {
 
             List<String> stores = new ArrayList<String>();  
             JsonArray storesJsonArray = result.getJsonArray("stores");  
-            logging.info("storesJsonArray: %s".formatted(storesJsonArray));
             if (!result.getJsonArray("stores").isEmpty()) {
                 storesJsonArray = result.getJsonArray("stores");
                 for (JsonValue s : storesJsonArray) {
@@ -173,4 +179,71 @@ public class GameDetailService {
 
         return game;
     }
+
+    public List<GameCard> searchByName(String searchTerm) {
+
+        // build url to search for top nine games closest to given query (title), 
+        // getting json object
+        final String url = UriComponentsBuilder // url to search by title
+                .fromUriString(URL_TOPTENGAMES)  
+                .queryParam("key", ENV_RAWG_API_KEY) 
+                .queryParam("search", searchTerm.trim().replace(" ", "+")) 
+                .queryParam("page_size", "9")
+                .toUriString();
+
+        final RequestEntity<Void> req = RequestEntity.get(url).build();
+        final RestTemplate template = new RestTemplate();
+        final ResponseEntity<String> resp = template.exchange(req, String.class);
+
+        if (resp.getStatusCode() != HttpStatus.OK) // if bad response
+            throw new IllegalArgumentException(
+                "Error: status code %s".formatted(resp.getStatusCode().toString())
+            );
+        final String body = resp.getBody(); // if ok response
+        // logging.info("payload: %s".formatted(body));
+
+        List<GameCard> store = new ArrayList<GameCard>();     
+        try (InputStream is = new ByteArrayInputStream(body.getBytes())) {
+            final JsonReader reader = Json.createReader(is);
+            final JsonObject result = reader.readObject();
+            final JsonArray result2 = result.getJsonArray("results");
+
+        // create GameCard object and compile the list of top nine games
+            for (JsonValue i : result2) {
+                GameCard game = new GameCard();
+                
+                game.setName(i.asJsonObject().getString("name"));
+                game.setBackgroundImageUrl(
+                    i.asJsonObject().getString("background_image")); 
+                game.setGameId(i.asJsonObject().getJsonNumber("id").intValue());
+
+                try {
+                    game.setReleasedDate(i.asJsonObject().getString("released")); 
+                } catch (Exception e) {
+                    game.setReleasedDate("Unknown");
+                }
+
+                try {
+                    game.setEsrbRating(
+                        i.asJsonObject()
+                            .getJsonObject("esrb_rating").getString("name")); 
+                } catch (Exception e) {
+                    game.setEsrbRating("No rating available");
+                }
+
+                JsonArray genresJsonArray = i.asJsonObject().getJsonArray("genres");
+                List<String> genres = new ArrayList<String>();      
+                for (JsonValue g : genresJsonArray) {
+                    genres.add(g.asJsonObject().getString("name"));
+                }
+                game.setGenres(genres);
+
+                store.add(game);
+            }
+        } catch (Exception e) { 
+            e.printStackTrace();
+        }
+
+        return store;
+        }
 }

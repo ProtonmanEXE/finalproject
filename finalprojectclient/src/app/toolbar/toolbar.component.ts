@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthenticationService } from '../shared/authentication.service';
@@ -9,6 +9,9 @@ import { AuthenticationService } from '../shared/authentication.service';
   styleUrls: ['./toolbar.component.css']
 })
 export class ToolbarComponent implements OnInit {
+
+  @ViewChild("search")
+  search!: any; // accessing the reference element
 
   private firstObsSub!: Subscription;
 
@@ -24,22 +27,30 @@ export class ToolbarComponent implements OnInit {
     })
   }
 
-  findGame() {
+  findGames(search: string) {
     if (this.authSvc.isUserLoggedIn()) {
-      this.router.navigate(["/gamedetail"])
-    } else console.log("find game print" +this.isUserLoggedIn)
+      console.log("form search value >>> " +search)
+
+      if (!search || search.trim().length == 0) {
+        this.router.navigate(["/"])
+      } else {
+        console.log("this is not blank >>> " +search)
+        this.router.navigate(["/search/", search])
+      }
+      this.search.nativeElement.value = "";
+    } else alert("You are not logged in.")
   }
 
   goToKaboomGames() {
     if (this.authSvc.isUserLoggedIn()) {
       this.router.navigate(["/games"])
-    } else console.log("goToKaboomGames" +this.isUserLoggedIn)
+    } else alert("You are not logged in.")
   }
 
   goToWishlist() {
     if (this.authSvc.isUserLoggedIn()) {
       this.router.navigate(["/wishlist"])
-    } else console.log("wishlist" +this.isUserLoggedIn)
+    } else alert("You are not logged in.")
   }
 
   logout() {
