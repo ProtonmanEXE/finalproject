@@ -19,5 +19,9 @@ public class SQL {
     public static final String SQL_DELETE_WISH = 
         "delete from wishlist where user_name = ? AND game_id = ?"; 
 
+    // to save new user    
+    public static final String SQL_SAVE_NEWUSER = 
+        "insert into user_accounts(user_name, password, email, authority, enabled) values (?, ?, ?, ?, ?)";
+        // "insert into user_accounts(user_name, password, email, authority, enabled) values (?, sha1(?), ?, ?, ?)";
 
 }

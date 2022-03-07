@@ -38,10 +38,4 @@ export class GamedetailsService {
       this.http.get<any>(
         "/jdbc/locked/deletewish/".concat(gameId.toString())))
   }
-
-  testOnly(): Promise<any> {
-    console.log("test test")
-		// return lastValueFrom(this.http.get<Todo[]>("/api/todos/".concat(userName)))
-    return lastValueFrom(this.http.get<any>("http://localhost:8080/hello"))
-	}
 }

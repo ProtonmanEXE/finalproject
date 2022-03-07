@@ -61,11 +61,4 @@ public class AuthController {
         return ResponseEntity.ok(new AuthenticationResponse(jwt));        
     }
 
-    @GetMapping(path="/hello")
-    public String helloWorld() {
-        System.out.println("Entered hello controller");
-        return "Hello World";
-    }
-
-
 }

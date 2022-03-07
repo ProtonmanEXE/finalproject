@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthenticationService } from '../shared/authentication.service';
 import { UserFullDetails } from '../shared/model';
 
 @Component({
@@ -16,7 +17,7 @@ export class SignupComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               // private gameSvc: GamedetailsService,
-              // private authSvc: AuthenticationService,
+              private authSvc: AuthenticationService,
               private router: Router) { }
 
   ngOnInit(): void {
@@ -28,11 +29,14 @@ export class SignupComponent implements OnInit {
   }
 
   signUp() {
-    console.log(this.userSignUp)
-
     const user: UserFullDetails = this.userSignUp.value as UserFullDetails
-
-    this.router.navigate(["/"]);
+    this.authSvc.saveUserDetails(user)
+      .then(() => {
+        alert("Thank you " +this.userSignUp.value.userName
+          +" for signing up with MegaRaves. Please check your email")
+        this.router.navigate(["/"]);
+      }).catch(() => {
+        alert(this.userSignUp.value.userName +" already exists.")
+      });
   }
-
 }

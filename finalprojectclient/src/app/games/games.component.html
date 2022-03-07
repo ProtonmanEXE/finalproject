@@ -5,12 +5,48 @@
     <div class="col"></div>
 
     <div class="col-lg-8 col-sm-8 col-md-4 mt-5 mb-3 card">
-      <h3 class="mt-3">Your Game Library</h3>
+      <h3 class="mt-3" style="margin-left: 10px">
+        {{ userName }}'s Games <i class="bi bi-controller"></i>
+      </h3>
 
       <table class="mt-3">
-        <tr *ngFor="let i of games">
-          <td><a href="http://localhost:8080/game" target="_blank">
-            <b>{{ i }}</b></a></td>
+        <tr>
+          <td style="vertical-align: text-bottom">
+            <a href="http://localhost:8080/game" target="_blank" class="hidecolour">
+              <img src="assets\creatureofhavoc.jpg">
+            </a>
+          </td>
+          <td class="centrecolumn">
+            <a href="http://localhost:8080/game" target="_blank" class="hidecolour">
+              <div><b>Creature of Havoc</b></div>
+              <div class="mt-2" style="font-size: small">
+                Release date: 2022-03-08</div>
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <td style="vertical-align: text-bottom">
+            <img src="assets\houseofhell.png">
+          </td>
+          <td class="centrecolumn">
+            <div><b>House of Hell</b></div>
+            <div class="mt-2" style="font-size: small">
+              Release date: In the future</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="vertical-align: middle">
+            <a href="http://localhost:8080/game" target="_blank" class="hidecolour">
+              <img src="assets\bean.png">
+            </a>
+          </td>
+          <td class="centrecolumn">
+            <a href="http://localhost:8080/game" target="_blank" class="hidecolour">
+              <div><b>Adventures of Mr Bean</b></div>
+              <div class="mt-2" style="font-size: small">
+              Release date: 2022-03-08</div>
+            </a>
+          </td>
         </tr>
       </table>
     </div>
@@ -19,4 +55,12 @@
 
   </div>
 
+</div>
+
+<div style="color: white; margin-left: 20px">
+  <em>
+    Adapted from (and credits to)
+    <a href="https://www.fightingfantasy.com/" target="_blank">
+      Fighting Fantasy Books</a>
+  </em>
 </div>

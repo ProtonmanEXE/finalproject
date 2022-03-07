@@ -41,11 +41,5 @@ export class LoginComponent implements OnInit {
         console.info("error >>> " +error);
         this.error = "Invalid username and/or password"
       })
-  }
-
-  testOnly() {
-    console.log("test only")
-    this.gameSvc.testOnly();
-  }
-
+    }
 }

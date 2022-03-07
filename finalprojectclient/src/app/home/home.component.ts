@@ -27,9 +27,8 @@ export class HomeComponent implements OnInit {
     this.gameDetailSvc.getTopTenGames()
       .then(topten => {
         this.topTenGames = topten
-        console.info("top ten = ", this.topTenGames )
       }).catch(() => {
-        console.info("Top ten games not found")
+        console.info("Top nine games not found")
       });
 
     this.firstObsSub = this.authSvc.customObs.subscribe(boolean => {
@@ -40,14 +39,16 @@ export class HomeComponent implements OnInit {
   }
 
   getUserName() {
-    console.log(sessionStorage.getItem("username"))
     return sessionStorage.getItem("username")
   }
 
   goToGameDetail(gameId: number) {
     if (this.authSvc.isUserLoggedIn()) {
       this.router.navigate(["/gamedetail/", gameId])
-    } else alert("Please log in.")
+    } else {
+      alert("Please log in.")
+      this.router.navigate(["/login"])
+    }
   }
 
   saveToWishlist(game: GameCard) {

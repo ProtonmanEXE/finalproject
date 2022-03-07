@@ -31,7 +31,6 @@ export class WishlistComponent implements OnInit {
   }
 
   getUserName() {
-    console.log(sessionStorage.getItem("username"))
     return sessionStorage.getItem("username")
   }
 
@@ -39,7 +38,6 @@ export class WishlistComponent implements OnInit {
     if (this.authSvc.isUserLoggedIn()) {
       this.gameDetailSvc.deleteGameWish(gameId)
       .then(msg => {
-        console.log("return msg >>> " +msg)
         this.gameDetailSvc.getWishList()
           .then(list => {this.wishlist = list})
       })

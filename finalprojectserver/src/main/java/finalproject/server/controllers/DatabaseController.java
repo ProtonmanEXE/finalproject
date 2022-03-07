@@ -8,11 +8,16 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import finalproject.server.models.FullUserDetails;
 import finalproject.server.models.GameCard;
 import finalproject.server.repository.GameDetailsRepos;
+import finalproject.server.repository.UserRepos;
+import finalproject.server.service.EmailService;
 import jakarta.json.Json;
 import jakarta.json.JsonArrayBuilder;
 import jakarta.json.JsonObjectBuilder;
@@ -25,6 +30,12 @@ public class DatabaseController {
 
     @Autowired
     GameDetailsRepos gameDetailRepo;
+
+    @Autowired
+    UserRepos userRepo;
+
+    @Autowired
+    EmailService emailSvc;
 
     @GetMapping(path="/locked/wishlist")
     public ResponseEntity<String> saveToWishList(Authentication authentication) {
@@ -58,6 +69,21 @@ public class DatabaseController {
         try {
             gameDetailRepo.deleteWish(Integer.valueOf(gameId), authentication.getName());
             return ResponseEntity.status(HttpStatus.OK).body("");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(
+                HttpStatus.INTERNAL_SERVER_ERROR).body("error");
+        }
+    }
+
+    @PostMapping(path="/registration", consumes=MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> saveToWishList(@RequestBody FullUserDetails newUser) {
+        System.out.println("Saving user to MySQL");
+
+        try {
+            userRepo.saveUser(newUser);
+            emailSvc.sendEmail(newUser.getUserName(), newUser.getEmail());
+            return ResponseEntity.status(HttpStatus.CREATED).body("");
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(
