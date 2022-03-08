@@ -1,0 +1,24 @@
+Instructions on how to deploy application:
+1) Web Pages (found in server folder "resources")
+- index.html
+  obtained via command "ng build" using folder "finalprojectclient" as root
+
+- mrbean.html
+  obtained via command "npm run start" using folder "creatureofhavockaboom" as root
+  need to move mrbean.html into templates and remaining files in "dist" into static
+
+- creatureofhavoc.html
+  obtained via command "npm run start" using folder "creatureofhavockaboom" as root
+  need to move creatureofhavoc.html into templates and remaining files in "dist" into static
+
+2) Database (MySQL)
+- Schema
+  run megaraves_schema.sql script in MySQL
+
+3) Environment Variables
+  Need to set up the following variables in Config Vars of Heroku:
+  - RAWG_API_KEY to access RAWG api (https://rawg.io/apidocs)
+  - SPRING_DATASOURCE_PASSWORD for access to MySQL in DigitalOccean
+  - SPRING_DATASOURCE_USERNAME for access to MySQL in DigitalOccean
+  - SPRING_MAIL_PASSWORD to authorise and allow usage of auto-email sending 
+  - SPRING_MAIL_USERNAME to authorise and allow usage of auto-email sending 
